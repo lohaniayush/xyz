@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe0e9;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+
+        .valentine-img {
+            width: 220px;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .buttons-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            height: 60px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: relative; 
+            z-index: 999;
+        }
+
+        /* Success Section Styling */
+        #success-section {
+            display: none;
+            animation: popIn 0.5s ease-out;
+        }
+
+        .success-message {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ff4d6d;
+            margin-top: 10px;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="question-section">
+            <img src="img1.jpg" class="valentine-img">
+            <h1>Will you be my vallantine?</h1>
+            <div class="buttons-wrapper">
+                <button id="yesBtn">Yes</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="success-section">
+            <img src="https://raw.githubusercontent.com/Itsharmaji/New-project/main/images2.jpg" alt="Happy Cat" class="valentine-img">
+            <div class="success-message">YAY! 🎆</div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionSection = document.getElementById('question-section');
+        const successSection = document.getElementById('success-section');
+
+        // The "fleeing" No button logic
+        const moveButton = () => {
+            noBtn.style.position = 'fixed';
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            const newX = Math.max(10, Math.random() * maxX);
+            const newY = Math.max(10, Math.random() * maxY);
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
+        // The "Yes" click logic
+        yesBtn.addEventListener('click', () => {
+            questionSection.style.display = 'none';
+            successSection.style.display = 'block';
+            
+            // Explosion of crackers
+            for (let i = 0; i < 100; i++) {
+                createFirework();
+            }
+        });
+
+        function createFirework() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            document.body.appendChild(confetti);
+
+            const colors = ['#ff4d6d', '#ffbc42', '#3a86ff', '#8338ec', '#fb5607', '#ff006e'];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            confetti.style.left = '50%';
+            confetti.style.top = '50%';
+
+            const destX = (Math.random() - 0.5) * window.innerWidth;
+            const destY = (Math.random() - 0.5) * window.innerHeight;
+
+            const anim = confetti.animate([
+                { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: 1 },
+                { transform: `translate(${destX}px, ${destY}px) scale(0) rotate(720deg)`, opacity: 0 }
+            ], {
+                duration: 1500,
+                easing: 'cubic-bezier(0, .9, .57, 1)'
+            });
+
+            anim.onfinish = () => confetti.remove();
+        }
+    </script>
+</body>
+</html>
+<!img1= https://tenor.com/search/cat-heart-gifs
+img2= https://www.instagram.com/p/Cg-dkKgrjPg/>
+
+
+
+
